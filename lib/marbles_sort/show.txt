@@ -1,0 +1,25 @@
+void showWinDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text('Selamat! 🎉'),
+        content: Text('Kamu berhasil menyelesaikan level $currentLevel!'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              setState(() {
+                currentLevel++;
+                balls = shuffleColors(getParameterForLevel(currentLevel));
+                selectedTube = null;
+                isBallLifted = false;
+                isMovingUp = true;
+              });
+            },
+            child: Text('Lanjut ke Level ${currentLevel + 1}'),
+          ),
+        ],
+      ),
+    );
+  }
