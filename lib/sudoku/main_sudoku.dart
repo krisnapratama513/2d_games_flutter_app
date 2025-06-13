@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'button.dart';
 import 'sudoku.dart';
-import 'sudokuDifficulty.dart';
+import 'sudoku_difficulty.dart';
+
 
 class SudokuPage extends StatefulWidget {
   const SudokuPage({super.key});
 
   @override
-  _SudokuPageState createState() => _SudokuPageState();
+  SudokuPageState createState() => SudokuPageState();
 }
 
-class _SudokuPageState extends State<SudokuPage> {
+class SudokuPageState extends State<SudokuPage> {
   String currentLevel = "sulit";
   List<List<int>> jawaban = [];
   List<List<int>> initialBoard = [];

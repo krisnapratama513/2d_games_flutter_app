@@ -3,14 +3,16 @@ import 'shuffle_colors.dart';
 import 'win_dialog.dart';
 
 class ThirdPage extends StatefulWidget {
-  const ThirdPage({super.key});
+  final int difficultyLevel;
+  // const ThirdPage({super.key});
+  const ThirdPage({super.key, required this.difficultyLevel});
 
   @override
-  _ThirdPageState createState() => _ThirdPageState();
+  ThirdPageState createState() => ThirdPageState();
 }
 
-class _ThirdPageState extends State<ThirdPage> {
-  int currentLevel = 23;
+class ThirdPageState extends State<ThirdPage> {
+  late int currentLevel;
   List<List<String>> balls = [];
 
   int? selectedTube;
@@ -19,6 +21,7 @@ class _ThirdPageState extends State<ThirdPage> {
 
   @override
   void initState() {
+    currentLevel = widget.difficultyLevel;
     super.initState();
     balls = shuffleColors(getParameterForLevel(currentLevel));
   }

@@ -3,27 +3,25 @@ import 'package:flutter/services.dart';
 import 'marbles_sort/instruction_marbles.dart';
 import 'tic_tac_toe.dart';
 import 'sudoku/main_sudoku.dart';
+import 'snake.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Mengunci orientasi layar hanya ke portraitUp
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]).then((_) {
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((
+    _,
+  ) {
     runApp(const MyApp());
   });
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
+    return const MaterialApp(home: HomePage());
   }
 }
 
@@ -33,11 +31,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Game 2D")),
+      appBar: AppBar(
+        title: Text("Game 2D", style: TextStyle(color: Color(0xFFDCD7C9), fontWeight: FontWeight.bold)),
+        backgroundColor: const Color(0xFF282823),
+        centerTitle: true,
+      ),
       body: Container(
-        color:Color(0xFF353A3E) ,
+        color: Color(0xFF353A3E),
         child: ListView(
-          
           children: <Widget>[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -51,7 +52,8 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MarblesInstructionPage(),
+                            builder: (context) =>
+                                const MarblesInstructionPage(),
                           ),
                         );
                       },
@@ -60,7 +62,10 @@ class HomePage extends StatelessWidget {
                         width: 130,
                         height: 180,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFFCC4B3B), width: 4.0),
+                          border: Border.all(
+                            color: Color(0xFFCC4B3B),
+                            width: 4.0,
+                          ),
                           color: Color(0xFFFF6F61),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -88,7 +93,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-        
+
                 Flexible(
                   flex: 1,
                   child: Material(
@@ -107,7 +112,10 @@ class HomePage extends StatelessWidget {
                         width: 130,
                         height: 180,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFF2E86C1), width: 4.0),
+                          border: Border.all(
+                            color: Color(0xFF2E86C1),
+                            width: 4.0,
+                          ),
                           color: Color(0xFF5DADE2),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -149,7 +157,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const MarblesInstructionPage(),
+                            builder: (context) => const SnakeGamePage(),
                           ),
                         );
                       },
@@ -158,7 +166,10 @@ class HomePage extends StatelessWidget {
                         width: 130,
                         height: 180,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFF5499C7), width: 4.0),
+                          border: Border.all(
+                            color: Color(0xFF5499C7),
+                            width: 4.0,
+                          ),
                           color: Color(0xFF85C1E9),
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -186,7 +197,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-        
+
                 Flexible(
                   flex: 1,
                   child: Material(
@@ -205,7 +216,10 @@ class HomePage extends StatelessWidget {
                         width: 130,
                         height: 180,
                         decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xFF6C3483), width: 4.0),
+                          border: Border.all(
+                            color: Color(0xFF6C3483),
+                            width: 4.0,
+                          ),
                           color: Color(0xFF8E44AD),
                           borderRadius: BorderRadius.circular(20),
                         ),

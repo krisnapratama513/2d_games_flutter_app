@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+
 // // Widget utama aplikasi
 // class SnakeGameApp extends StatelessWidget {
 //   const SnakeGameApp({super.key});
@@ -112,10 +113,7 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
     }
 
     // Cek tabrakan dengan dinding
-    if (newHead.x < 0 ||
-        newHead.x >= gridSize ||
-        newHead.y < 0 ||
-        newHead.y >= gridSize) {
+    if (newHead.x < 0 || newHead.x >= gridSize || newHead.y < 0 || newHead.y >= gridSize) {
       resetGame();
       return;
     }
@@ -195,20 +193,6 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF353A3E),
-      appBar: AppBar(
-        title: Text(
-          "Snake Game",
-          style: TextStyle(
-            color: Color(0xFFDCD7C9),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFF282823),
-        centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Color(0xFFDCD7C9), // This changes the back button color
-        ),
-      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -259,22 +243,24 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
                   child: SafeArea(
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue, width: 2.0),
+                        border: Border.all(
+                          color: Colors.blue,
+                          width: 2.0,
+                        ),
                       ),
                       child: AspectRatio(
                         aspectRatio: 1.0,
                         child: GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: gridSize,
-                              ),
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: gridSize,
+                          ),
                           itemCount: gridSize * gridSize,
                           itemBuilder: (context, index) {
                             final x = index % gridSize;
                             final y = index ~/ gridSize;
                             final point = Point(x, y);
-
+                    
                             Color color;
                             if (snake.contains(point)) {
                               color = Colors.grey.shade700;
@@ -283,7 +269,7 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
                             } else {
                               color = Colors.white;
                             }
-
+                    
                             return Container(
                               decoration: BoxDecoration(
                                 color: color,
@@ -293,9 +279,7 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
                                 ),
                               ),
                               child: Center(
-                                child: color == Colors.grey.shade300
-                                    ? const Text("🍎")
-                                    : null,
+                                child: color == Colors.grey.shade300 ? const Text("🍎") : null,
                               ),
                             );
                           },

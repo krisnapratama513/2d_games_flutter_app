@@ -46,9 +46,16 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
       appBar: AppBar(
         title: const Text(
           'MARBLES SORT',
-          style: TextStyle(color: Color(0xFFDCD7C9)),
+          style: TextStyle(
+            color: Color(0xFFDCD7C9),
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: const Color(0xFF282823),
+        centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Color(0xFFDCD7C9), // This changes the back button color
+        ),
         elevation: 4,
       ),
       body: Container(
@@ -204,7 +211,10 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const ThirdPage(),
+                            // builder: (context) => const ThirdPage(difficultyLevel: difficulty['level']),
+                            builder: (context) =>
+                                ThirdPage(difficultyLevel: difficulty['level']),
+                            // ${difficulty['level']}
                           ),
                         );
                       },
@@ -232,8 +242,6 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
                       ),
                     ),
                   ),
-
-                  
                 ],
               ),
             ),
