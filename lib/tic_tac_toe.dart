@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'common_widgets/app_bar.dart';
 
 class TicTacToePage extends StatefulWidget {
   const TicTacToePage({super.key});
@@ -156,10 +157,7 @@ class _TicTacToePageState extends State<TicTacToePage>
             color: Colors.white, // Background putih agar gambar terlihat jelas
           ),
           child: imagePath != null
-              ? Image.asset(
-                  imagePath,
-                  fit: BoxFit.fill,
-                )
+              ? Image.asset(imagePath, fit: BoxFit.fill)
               : const SizedBox.shrink(),
         ),
       ),
@@ -209,7 +207,7 @@ class _TicTacToePageState extends State<TicTacToePage>
       style: const TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
-        color: Colors.black87,
+        color: Color(0xFFABD1C6),
       ),
     );
   }
@@ -219,8 +217,9 @@ class _TicTacToePageState extends State<TicTacToePage>
     if (!_showPopup) return const SizedBox.shrink();
 
     // Posisi popup: atas untuk O, bawah untuk X
-    Alignment alignment =
-        _currentPlayer == 2 ? Alignment.topCenter : Alignment.bottomCenter;
+    Alignment alignment = _currentPlayer == 2
+        ? Alignment.topCenter
+        : Alignment.bottomCenter;
 
     return Align(
       alignment: alignment,
@@ -231,8 +230,7 @@ class _TicTacToePageState extends State<TicTacToePage>
           child: ScaleTransition(
             scale: _fadeAnimation,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               decoration: BoxDecoration(
                 color: Colors.black87,
                 borderRadius: BorderRadius.circular(24),
@@ -260,41 +258,43 @@ class _TicTacToePageState extends State<TicTacToePage>
 
     return Scaffold(
       backgroundColor: Colors.grey.shade200,
-      appBar: AppBar(
-        title: const Text('Tic Tac Toe'),
-        centerTitle: true,
-        backgroundColor: Colors.red.shade400,
-      ),
-      body: Stack(
-        children: [
-          Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                _buildBoard(boardSize),
-                const SizedBox(height: 24),
-                _buildStatus(),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: _resetGame,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade400,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(24),
+      appBar: CustomAppBar(titleText: 'Tic Tac Toe'),
+
+      body: Container(
+        color: Color(0xFF353A3E),
+        child: Stack(
+          children: [
+            Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildBoard(boardSize),
+                  const SizedBox(height: 24),
+                  _buildStatus(),
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: _resetGame,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade400,
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 32,
+                        vertical: 12,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(24),
+                      ),
+                    ),
+                    child: const Text(
+                      'Reset Game',
+                      style: TextStyle(fontSize: 18),
                     ),
                   ),
-                  child: const Text(
-                    'Reset Game',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          _buildPopup(),
-        ],
+            _buildPopup(),
+          ],
+        ),
       ),
     );
   }

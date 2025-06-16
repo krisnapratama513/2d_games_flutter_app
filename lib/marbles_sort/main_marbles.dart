@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'shuffle_colors.dart';
 import 'win_dialog.dart';
+import '../common_widgets/app_bar.dart';
 
 class ThirdPage extends StatefulWidget {
   final int difficultyLevel;
@@ -135,13 +136,14 @@ class ThirdPageState extends State<ThirdPage> {
     final tubeHeight = ballSize * 5.3;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Level $currentLevel',
-          style: TextStyle(color: Color(0xFFDCD7C9)),
-        ),
-        backgroundColor: const Color(0xFF282823),
-      ),
+      appBar: CustomAppBar(titleText: 'Level $currentLevel'),
+      // AppBar(
+      //   title: Text(
+      //     'Level $currentLevel',
+      //     style: TextStyle(color: Color(0xFFDCD7C9)),
+      //   ),
+      //   backgroundColor: const Color(0xFF282823),
+      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(12),

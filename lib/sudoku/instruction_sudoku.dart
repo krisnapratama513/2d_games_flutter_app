@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'main_marbles.dart'; // Import halaman game marble
+import 'main_sudoku.dart';
 import '../common_widgets/app_bar.dart';
 import '../common_widgets/play_button.dart';
 import '../common_widgets/difficulty_label.dart';
@@ -8,39 +8,37 @@ import '../common_widgets/list_text_instruction.dart';
 import '../utils/responsive_font_size.dart';
 import '../utils/get_difficulty.dart';
 
-class MarblesInstructionPage extends StatefulWidget {
-  const MarblesInstructionPage({super.key});
+class SudokuInstructionPage extends StatefulWidget {
+  const SudokuInstructionPage({super.key});
 
   @override
-  State<MarblesInstructionPage> createState() => _MarblesInstructionPageState();
+  State<SudokuInstructionPage> createState() => SudokuInstructionPageState();
 }
 
-class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
-  double _sliderValue = 0.25; // Nilai slider dari 0.0 sampai 1.0
+class SudokuInstructionPageState extends State<SudokuInstructionPage> {
+  double _sliderValue = 0.25;
 
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final difficulty = getDifficulty(_sliderValue, levelAsString: false);
+    final difficulty = getDifficulty(_sliderValue);
 
     return Scaffold(
-      appBar: CustomAppBar(titleText: "MARBLES SORT"),
-
+      appBar: CustomAppBar(titleText: "Sudoku"),
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [Color(0xFF353A3E), Color(0xFF282823)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Instruksi awal
             Text(
-              'Pindahkan kelereng antar gelas kaca hingga semua kelereng dalam satu gelas memiliki warna yang sama.',
+              'Isi semua kotak kosong, sehingga setiap baris, kolom, dan kotak 3x3 mengandung semua angka dari 1 hingga 9 tanpa ada pengulangan.',
               style: TextStyle(
                 fontSize: responsiveFontSize(screenWidth, 25),
                 color: Color(0xFFD7C9AE),
@@ -49,24 +47,30 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
               ),
             ),
             SizedBox(height: responsiveFontSize(screenWidth, 30)),
+
             Text(
-              'Anda hanya dapat memindahkan kelereng ke gelas lain yang:',
+              'Cara Bermain :',
               style: TextStyle(
-                fontSize: responsiveFontSize(screenWidth, 22),
+                fontSize: responsiveFontSize(screenWidth, 20),
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
+                height: 1.4,
               ),
             ),
+
             SizedBox(height: responsiveFontSize(screenWidth, 20)),
 
-            // List tanpa card, dengan ikon dan teks langsung
             ListTextInstruction(
-              texts: ['Masih memiliki ruang kosong', 'Berisi kelereng dengan warna yang sama'],
+              texts: [
+                'Pilih kotak kosong pada papan Sudoku.',
+                'Pilih angka 1 sampai 9 dari tombol angka di bawah papan untuk mengisi kotak yang dipilih',
+                'Jika angka yang dimasukkan salah, akan kehilangan satu hati (nyawa). Hati berwarna merah menunjukkan sisa nyawa.',
+              ],
               icon: Icons.check_circle,
               screenWidth: screenWidth,
             ),
 
-            SizedBox(height: responsiveFontSize(screenWidth, 60)),
+            SizedBox(height: responsiveFontSize(screenWidth, 30)),
 
             // Label tingkat kesulitan
             DifficultyLabel(
@@ -77,7 +81,7 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
 
             SizedBox(height: responsiveFontSize(screenWidth, 12)),
 
-            // Slider dengan custom track dan thumb
+            // Slider tingkat kesulitan
             DifficultySlider(
               difficulty: difficulty,
               value: _sliderValue,
@@ -97,10 +101,8 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
                 'color': difficulty['color'],
                 'level': difficulty['level'],
               },
-              showLevelText: true,
-              page: ThirdPage(
-                difficultyLevel: difficulty['level'],
-              ), // Navigasi ke SudokuPage
+              showLevelText: false,
+              page: SudokuPage(difficultyLevel: difficulty['level']), // Navigasi ke SudokuPage
             ),
           ],
         ),
@@ -108,4 +110,3 @@ class _MarblesInstructionPageState extends State<MarblesInstructionPage> {
     );
   }
 }
-

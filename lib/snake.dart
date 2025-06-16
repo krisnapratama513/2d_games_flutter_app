@@ -1,25 +1,7 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:flutter/material.dart';
-
-// // Widget utama aplikasi
-// class SnakeGameApp extends StatelessWidget {
-//   const SnakeGameApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Snake Game',
-//       theme: ThemeData(
-//         primarySwatch: Colors.green,
-//         fontFamily: 'Courier New',
-//       ),
-//       home: const SnakeGamePage(),
-//       debugShowCheckedModeBanner: false,
-//     );
-//   }
-// }
+import 'common_widgets/app_bar.dart';
 
 // Halaman utama game yang bersifat stateful karena ada perubahan state (posisi ular, skor, dll)
 class SnakeGamePage extends StatefulWidget {
@@ -47,6 +29,7 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
 
   // Kecepatan gerak ular dalam milidetik (semakin kecil semakin cepat)
   int speed = 200;
+  // int speed = 30;
 
   // Status apakah game sudah dimulai
   bool gameStarted = false;
@@ -58,6 +41,12 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
   void initState() {
     super.initState();
     generateFood(); // Buat makanan pertama kali saat game dimulai
+  }
+
+  @override
+  void dispose() {
+    gameTimer?.cancel();
+    super.dispose();
   }
 
   // Membuat posisi makanan baru secara acak, pastikan tidak bertabrakan dengan ular
@@ -193,128 +182,126 @@ class _SnakeGamePageState extends State<SnakeGamePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF353A3E),
-      appBar: AppBar(
-        title: Text(
-          "Snake Game",
-          style: TextStyle(
-            color: Color(0xFFDCD7C9),
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: const Color(0xFF282823),
-        centerTitle: true,
-        iconTheme: IconThemeData(
-          color: Color(0xFFDCD7C9), // This changes the back button color
-        ),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 360),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                // Tampilan skor
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Score: $score',
-                        style: const TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFFabb78a),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                // Area permainan dengan gesture untuk mengubah arah ular
-                GestureDetector(
-                  onVerticalDragUpdate: (details) {
-                    if (details.delta.dy < 0) {
-                      changeDirection('up');
-                    } else if (details.delta.dy > 0) {
-                      changeDirection('down');
-                    }
-                  },
-                  onHorizontalDragUpdate: (details) {
-                    if (details.delta.dx < 0) {
-                      changeDirection('left');
-                    } else if (details.delta.dx > 0) {
-                      changeDirection('right');
-                    }
-                  },
-                  onTap: () {
-                    if (!gameStarted) {
-                      startGame();
-                    }
-                  },
-                  child: SafeArea(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.blue, width: 2.0),
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 1.0,
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: gridSize,
-                              ),
-                          itemCount: gridSize * gridSize,
-                          itemBuilder: (context, index) {
-                            final x = index % gridSize;
-                            final y = index ~/ gridSize;
-                            final point = Point(x, y);
-
-                            Color color;
-                            if (snake.contains(point)) {
-                              color = Colors.grey.shade700;
-                            } else if (point == food) {
-                              color = Colors.grey.shade300;
-                            } else {
-                              color = Colors.white;
-                            }
-
-                            return Container(
-                              decoration: BoxDecoration(
-                                color: color,
-                                border: Border.all(
-                                  color: Colors.grey.shade400,
-                                  width: 0.3,
-                                ),
-                              ),
-                              child: Center(
-                                child: color == Colors.grey.shade300
-                                    ? const Text("🍎")
-                                    : null,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Tombol mulai game muncul jika game belum dimulai
-                if (!gameStarted)
+    return PopScope(
+      canPop: true,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) {
+          // Jika pop berhasil, lakukan sesuatu (misal batalkan timer)
+          gameTimer?.cancel();
+        } else {
+          // Jika pop dibatalkan, bisa tampilkan dialog konfirmasi atau logika lain
+        }
+      },
+      child: Scaffold(
+        backgroundColor: Color(0xFF353A3E),
+        appBar: CustomAppBar(titleText: "Snake Game"),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 360),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Tampilan skor
                   Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: ElevatedButton(
-                      onPressed: startGame,
-                      child: const Text('Start Game'),
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Score: $score',
+                          style: const TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFFabb78a),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-              ],
+
+                  // Area permainan dengan gesture untuk mengubah arah ular
+                  GestureDetector(
+                    onVerticalDragUpdate: (details) {
+                      if (details.delta.dy < 0) {
+                        changeDirection('up');
+                      } else if (details.delta.dy > 0) {
+                        changeDirection('down');
+                      }
+                    },
+                    onHorizontalDragUpdate: (details) {
+                      if (details.delta.dx < 0) {
+                        changeDirection('left');
+                      } else if (details.delta.dx > 0) {
+                        changeDirection('right');
+                      }
+                    },
+                    onTap: () {
+                      if (!gameStarted) {
+                        startGame();
+                      }
+                    },
+                    child: SafeArea(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.blue, width: 2.0),
+                        ),
+                        child: AspectRatio(
+                          aspectRatio: 1.0,
+                          child: GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: gridSize,
+                                ),
+                            itemCount: gridSize * gridSize,
+                            itemBuilder: (context, index) {
+                              final x = index % gridSize;
+                              final y = index ~/ gridSize;
+                              final point = Point(x, y);
+
+                              Color color;
+                              if (snake.contains(point)) {
+                                color = Colors.grey.shade700;
+                              } else if (point == food) {
+                                color = Colors.grey.shade300;
+                              } else {
+                                color = Colors.white;
+                              }
+
+                              return Container(
+                                decoration: BoxDecoration(
+                                  color: color,
+                                  border: Border.all(
+                                    color: Colors.grey.shade400,
+                                    width: 0.3,
+                                  ),
+                                ),
+                                child: Center(
+                                  child: color == Colors.grey.shade300
+                                      ? const Text("🍎")
+                                      : null,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Tombol mulai game muncul jika game belum dimulai
+                  if (!gameStarted)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: ElevatedButton(
+                        onPressed: startGame,
+                        child: const Text('Start Game'),
+                      ),
+                    ),
+                ],
+              ),
             ),
           ),
         ),

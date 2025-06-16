@@ -2,17 +2,19 @@ import 'package:flutter/material.dart';
 import 'button.dart';
 import 'sudoku.dart';
 import 'sudoku_difficulty.dart';
+import '../common_widgets/app_bar.dart';
 
 
 class SudokuPage extends StatefulWidget {
-  const SudokuPage({super.key});
+  final String difficultyLevel;
+  const SudokuPage({super.key, required this.difficultyLevel});
 
   @override
   SudokuPageState createState() => SudokuPageState();
 }
 
 class SudokuPageState extends State<SudokuPage> {
-  String currentLevel = "sulit";
+  late String currentLevel;
   List<List<int>> jawaban = [];
   List<List<int>> initialBoard = [];
 
@@ -27,6 +29,7 @@ class SudokuPageState extends State<SudokuPage> {
   void initState() {
     super.initState();
     jawaban = generateSudoku();
+    currentLevel = widget.difficultyLevel;
     initialBoard = applySudokuDifficulty(jawaban, currentLevel);
     board = List.generate(
       9,
@@ -153,7 +156,8 @@ class SudokuPageState extends State<SudokuPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Sudoku Flutter'), centerTitle: true),
+      appBar: CustomAppBar(titleText: widget.difficultyLevel.toUpperCase()),
+      // AppBar(title: const Text('Sudoku Flutter'), centerTitle: true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(12.0),

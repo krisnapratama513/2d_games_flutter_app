@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'marbles_sort/instruction_marbles.dart';
 import 'tic_tac_toe.dart';
-import 'sudoku/main_sudoku.dart';
+// import 'sudoku/intruc.dart';
+import 'sudoku/instruction_sudoku.dart';
 import 'snake.dart';
 
 void main() {
@@ -103,7 +104,7 @@ class HomePage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const SudokuPage(),
+                            builder: (context) => const SudokuInstructionPage(),
                           ),
                         );
                       },
