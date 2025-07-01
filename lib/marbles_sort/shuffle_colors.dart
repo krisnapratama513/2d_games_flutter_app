@@ -6,10 +6,10 @@ List<List<String>> shuffleColors(int numColors) {
   // final selectedColors = colors.sublist(0, numColors);
 
   // Daftar warna tetap
-  final List<String> baseColors = ['red', 'yellow', 'green', 'blue', 'purple'];
+  final List<String> baseColors = ['red', 'yellow', 'green', 'blue', 'purple', 'green2'];
   List<String> selectedColors;
 
-  if (numColors == 6) {
+  if (numColors == 7) {
     // Pilih satu warna acak dari baseColors untuk warna keenam
     final random = Random();
     String randomColor = baseColors[random.nextInt(baseColors.length)];

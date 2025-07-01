@@ -33,7 +33,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Game 2D", style: TextStyle(color: Color(0xFFDCD7C9), fontWeight: FontWeight.bold)),
+        title: Text(
+          "Game 2D",
+          style: TextStyle(
+            color: Color(0xFFDCD7C9),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: const Color(0xFF282823),
         centerTitle: true,
       ),
@@ -146,6 +152,9 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
+
+            SizedBox(height: 80),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -180,7 +189,7 @@ class HomePage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                "ULAR NOKIA",
+                                "SNAKE GAME",
                                 style: TextStyle(
                                   color: Color(0xFF2F4F4F),
                                   fontWeight: FontWeight.bold,

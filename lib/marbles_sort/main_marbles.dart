@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'shuffle_colors.dart';
 import 'win_dialog.dart';
 import '../common_widgets/app_bar.dart';
+import 'dart:async';
 
 class ThirdPage extends StatefulWidget {
   final int difficultyLevel;
@@ -25,7 +26,9 @@ class ThirdPageState extends State<ThirdPage> {
     currentLevel = widget.difficultyLevel;
     super.initState();
     balls = shuffleColors(getParameterForLevel(currentLevel));
+    
   }
+
 
   int getParameterForLevel(int level) {
     if (level == 1) return 2;
@@ -136,14 +139,8 @@ class ThirdPageState extends State<ThirdPage> {
     final tubeHeight = ballSize * 5.3;
 
     return Scaffold(
+      backgroundColor: Color(0xFF353A3E),
       appBar: CustomAppBar(titleText: 'Level $currentLevel'),
-      // AppBar(
-      //   title: Text(
-      //     'Level $currentLevel',
-      //     style: TextStyle(color: Color(0xFFDCD7C9)),
-      //   ),
-      //   backgroundColor: const Color(0xFF282823),
-      // ),
       body: Center(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(12),
@@ -196,9 +193,9 @@ class GlassTube extends StatelessWidget {
       height: tubeHeight,
       padding: const EdgeInsets.only(bottom: 10.0),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.black87, width: 2),
+        border: Border.all(color: Color(0xFFB6F500), width: 2),
         borderRadius: BorderRadius.vertical(bottom: Radius.circular(tubeWidth)),
-        color: Colors.white.withAlpha((0.85 * 255).toInt()),
+        color: Colors.black.withAlpha((0.85 * 255).toInt()),
       ),
       child: Stack(
         alignment: Alignment.bottomCenter,
@@ -227,11 +224,16 @@ class GlassTube extends StatelessWidget {
             curve: curve,
             bottom: animatedBottom,
             left: (tubeWidth - ballSize) / 2,
+
             child: Container(
               width: ballSize,
               height: ballSize,
               decoration: BoxDecoration(
-                color: _colorFromName(color),
+                image: DecorationImage(
+                  image: AssetImage(_getMarbleAsset(color)),
+                  fit: BoxFit.cover, // atau BoxFit.fill sesuai kebutuhan
+                ),
+                // color: Colors.yellowAccent,
                 shape: BoxShape.circle,
                 boxShadow: const [
                   BoxShadow(
@@ -248,20 +250,10 @@ class GlassTube extends StatelessWidget {
     );
   }
 
-  Color _colorFromName(String name) {
-    switch (name) {
-      case 'red':
-        return Colors.red;
-      case 'yellow':
-        return Colors.yellow;
-      case 'green':
-        return Colors.green;
-      case 'blue':
-        return Colors.blue;
-      case 'purple':
-        return Colors.purple;
-      default:
-        return Colors.grey;
-    }
+  String _getMarbleAsset(String name) {
+    final availableColors = ['red', 'yellow', 'green', 'blue', 'purple', 'green2'];
+    return availableColors.contains(name)
+        ? 'assets/marbles/$name.png'
+        : 'assets/marbles/default.png';
   }
 }

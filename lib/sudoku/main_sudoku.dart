@@ -4,6 +4,7 @@ import 'sudoku.dart';
 import 'sudoku_difficulty.dart';
 import '../common_widgets/app_bar.dart';
 
+import 'package:audioplayers/audioplayers.dart';
 
 class SudokuPage extends StatefulWidget {
   final String difficultyLevel;
@@ -15,9 +16,11 @@ class SudokuPage extends StatefulWidget {
 
 class SudokuPageState extends State<SudokuPage> {
   late String currentLevel;
+
+  late final AudioPlayer _audioPlayer;
+
   List<List<int>> jawaban = [];
   List<List<int>> initialBoard = [];
-
 
   late List<List<int>> board;
   int lives = 4; // Mulai dengan 4 nyawa
@@ -35,6 +38,14 @@ class SudokuPageState extends State<SudokuPage> {
       9,
       (i) => List.generate(9, (j) => initialBoard[i][j]),
     );
+
+    _audioPlayer = AudioPlayer();
+    _preloadSounds(); // Tambahkan ini
+  }
+
+  Future<void> _preloadSounds() async {
+    await _audioPlayer.setSource(AssetSource('sounds/win.mp3'));
+    await _audioPlayer.setSource(AssetSource('sounds/lose.mp3'));
   }
 
   void selectCell(int row, int col) {
@@ -78,40 +89,118 @@ class SudokuPageState extends State<SudokuPage> {
     return true;
   }
 
-  void _showGameOverDialog() {
+  void _showGameOverDialog() async {
+    await _audioPlayer.play(AssetSource('sounds/lose.mp3'));
+    if (!mounted) return; // Cek apakah widget masih aktif
+
+
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Game Over'),
-        content: const Text('Nyawa habis, Anda kalah!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _resetGame();
-            },
-            child: const Text('Coba Lagi'),
+      barrierDismissible:
+          false, // agar tidak bisa dismiss dengan klik di luar dialog
+      builder: (_) => Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 10,
+        backgroundColor: Colors.white,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          height: 220,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                Icons.sentiment_very_dissatisfied,
+                size: 60,
+                color: Colors.redAccent,
+              ),
+              const Text(
+                'Game Over',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.redAccent,
+                ),
+              ),
+              const Text(
+                'Nyawa habis, Anda kalah!',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _resetGame();
+                },
+                child: const Text('Coba Lagi', style: TextStyle(fontSize: 18)),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
 
-  void _showWinDialog() {
+  void _showWinDialog() async {
+    await _audioPlayer.play(AssetSource('sounds/win.mp3'));
+    if (!mounted) return; // Cek apakah widget masih aktif
+
     showDialog(
       context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Selamat!'),
-        content: const Text('Anda berhasil menyelesaikan Sudoku!'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              _resetGame();
-            },
-            child: const Text('Main Lagi'),
+      barrierDismissible: false, // tidak bisa dismiss klik luar
+      builder: (_) => Dialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        elevation: 10,
+        backgroundColor: Colors.white,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          height: 220,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(Icons.emoji_events, size: 60, color: Colors.green),
+              const Text(
+                'Selamat!',
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+              const Text(
+                'Anda berhasil menyelesaikan Sudoku!',
+                style: TextStyle(fontSize: 16, color: Colors.black87),
+                textAlign: TextAlign.center,
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 40,
+                    vertical: 12,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _resetGame();
+                },
+                child: const Text('Main Lagi', style: TextStyle(fontSize: 18)),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
