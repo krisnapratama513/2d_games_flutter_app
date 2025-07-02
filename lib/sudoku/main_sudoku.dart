@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'button.dart';
-import 'sudoku.dart';
-import 'sudoku_difficulty.dart';
+import '../utils/sudoku_generator.dart';
+import '../utils/sudoku_difficulty.dart';
 import '../common_widgets/app_bar.dart';
 
 import 'package:audioplayers/audioplayers.dart';

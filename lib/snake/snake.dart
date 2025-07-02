@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'common_widgets/app_bar.dart';
+import './../common_widgets/app_bar.dart';
 
 // Halaman utama game yang bersifat stateful karena ada perubahan state (posisi ular, skor, dll)
 class SnakeGamePage extends StatefulWidget {

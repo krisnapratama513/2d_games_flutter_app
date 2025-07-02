@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'common_widgets/app_bar.dart';
+import '../common_widgets/app_bar.dart';
 
 class TicTacToePage extends StatefulWidget {
   const TicTacToePage({super.key});

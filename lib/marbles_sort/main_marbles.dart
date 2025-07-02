@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'shuffle_colors.dart';
-import 'win_dialog.dart';
-import '../common_widgets/app_bar.dart';
 import 'dart:async';
+import '../utils/shuffle_colors.dart';
+import '../common_widgets/app_bar.dart';
+import 'win_dialog.dart';
+
 
 class ThirdPage extends StatefulWidget {
   final int difficultyLevel;

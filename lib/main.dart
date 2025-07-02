@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'common_widgets/main_card.dart';
+// page instruksi setiap game
 import 'marbles_sort/instruction_marbles.dart';
-import 'tic_tac_toe.dart';
-// import 'sudoku/intruc.dart';
 import 'sudoku/instruction_sudoku.dart';
-import 'snake.dart';
+import 'snake/instruction_snake.dart';
+import 'tic_tac_toe/instruction_tictac.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,221 +46,82 @@ class HomePage extends StatelessWidget {
       ),
       body: Container(
         color: Color(0xFF353A3E),
-        child: ListView(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const MarblesInstructionPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        width: 130,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFFCC4B3B),
-                            width: 4.0,
-                          ),
-                          color: Color(0xFFFF6F61),
-                          borderRadius: BorderRadius.circular(20),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CustomFlexibleCard(
+                    title: "MARBLE SORT",
+                    borderColor: const Color(0xFFCC4B3B),
+                    backgroundColor: const Color(0xFFFF6F61),
+                    textColor: const Color(0xFFFFF1E0),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const MarblesInstructionPage(),
                         ),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "MARBLE SORT",
-                                style: TextStyle(
-                                  color: Color(0xFFFFF1E0),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                width: 50,
-                                height: 5,
-                                color: Color(0xFFFFF1E0),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ),
 
-                Flexible(
-                  flex: 1,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SudokuInstructionPage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        width: 130,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF2E86C1),
-                            width: 4.0,
-                          ),
-                          color: Color(0xFF5DADE2),
-                          borderRadius: BorderRadius.circular(20),
+                  CustomFlexibleCard(
+                    title: "SUDOKU",
+                    borderColor: const Color(0xFF2E86C1),
+                    backgroundColor: const Color(0xFF5DADE2),
+                    textColor: const Color(0xFFFFF9C4),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SudokuInstructionPage(),
                         ),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "SUDOKU",
-                                style: TextStyle(
-                                  color: Color(0xFFFFF9C4),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                width: 50,
-                                height: 5,
-                                color: Color(0xFFFFF9C4),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
 
-            SizedBox(height: 80),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                Flexible(
-                  flex: 1,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SnakeGamePage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        width: 130,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF5499C7),
-                            width: 4.0,
-                          ),
-                          color: Color(0xFF85C1E9),
-                          borderRadius: BorderRadius.circular(20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CustomFlexibleCard(
+                    title: "SNAKE GAME",
+                    borderColor: const Color(0xFF5499C7),
+                    backgroundColor: const Color(0xFF85C1E9),
+                    textColor: const Color(0xFF2F4F4F),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SnakeInstructionPage(),
                         ),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "SNAKE GAME",
-                                style: TextStyle(
-                                  color: Color(0xFF2F4F4F),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                width: 50,
-                                height: 5,
-                                color: Color(0xFF2F4F4F),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ),
 
-                Flexible(
-                  flex: 1,
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const TicTacToePage(),
-                          ),
-                        );
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(5),
-                        width: 130,
-                        height: 180,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Color(0xFF6C3483),
-                            width: 4.0,
-                          ),
-                          color: Color(0xFF8E44AD),
-                          borderRadius: BorderRadius.circular(20),
+                  CustomFlexibleCard(
+                    title: "TIC TAC TOE",
+                    borderColor: const Color(0xFF6C3483),
+                    backgroundColor: const Color(0xFF8E44AD),
+                    textColor: const Color(0xFFFFD700),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TicTacInstructionPage(),
                         ),
-                        child: Container(
-                          margin: EdgeInsets.all(10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "TIC TAC TOE",
-                                style: TextStyle(
-                                  color: Color(0xFFFFD700),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Container(
-                                width: 50,
-                                height: 5,
-                                color: Color(0xFFFFD700),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
